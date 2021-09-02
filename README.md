@@ -1,25 +1,34 @@
-# Getting Started
+# spring-external-config-server
 
-### Reference Documentation
+Sample spring app with a configuration externalised to Spring Cloud Config Server.
 
-For further reference, please consider the following sections:
+## How to run
 
-* [Official Apache Maven documentation](https://maven.apache.org/guides/index.html)
-* [Spring Boot Maven Plugin Reference Guide](https://docs.spring.io/spring-boot/docs/2.5.4/maven-plugin/reference/html/)
-* [Create an OCI image](https://docs.spring.io/spring-boot/docs/2.5.4/maven-plugin/reference/html/#build-image)
-* [Spring Web](https://docs.spring.io/spring-boot/docs/2.5.4/reference/htmlsingle/#boot-features-developing-web-applications)
-* [Config Client Quick Start](https://docs.spring.io/spring-cloud-config/docs/current/reference/html/#_client_side_usage)
-* [Spring Security](https://docs.spring.io/spring-boot/docs/2.5.4/reference/htmlsingle/#boot-features-security)
+1. Create git repository as a backend for config server at `${user.home}/spring-cloud-config-repo`
+   and add two properties files for `springConfigServerClientApp` application (`dev` and `prod` profiles):
+   ```
+   cd ${HOME}
+   mkdir spring-cloud-config-repo
+   cd spring-cloud-config-repo
+   git init .
+   echo my.useful.param=dev-value > springConfigServerClientApp-dev.properties
+   echo my.useful.param=PROD-value > springConfigServerClientApp-prod.properties
+   git add -A .
+   git commit -m "Add application.properties"
+   ```
+2. Start `config-server` module's spring boot app - this is the Config Server serving requests at
+   http://localhost:8888. Try it out with 
+   ```
+   GET http://user:Passw0rd@localhost:8888/springConfigServerClientApp/dev
+   ```
+3. Start `client-app` module's spring boot app - this is the client. It should read properties from the 
+   config server and print something like
+   ```
+   PropertiesFetcher: myUsefulParam=dev-value
+   ```
 
-### Guides
+## Links
 
-The following guides illustrate how to use some features concretely:
+[Spring Cloud Config Server](https://cloud.spring.io/spring-cloud-config/reference/html/#_spring_cloud_config_server)
 
-* [Building a RESTful Web Service](https://spring.io/guides/gs/rest-service/)
-* [Serving Web Content with Spring MVC](https://spring.io/guides/gs/serving-web-content/)
-* [Building REST services with Spring](https://spring.io/guides/tutorials/bookmarks/)
-* [Securing a Web Application](https://spring.io/guides/gs/securing-web/)
-* [Spring Boot and OAuth2](https://spring.io/guides/tutorials/spring-boot-oauth2/)
-* [Authenticating a User with LDAP](https://spring.io/guides/gs/authenticating-ldap/)
-* [Centralized Configuration](https://spring.io/guides/gs/centralized-configuration/)
-
+[Quick Intro to Spring Cloud Configuration](https://www.baeldung.com/spring-cloud-configuration) (by baeldung)
