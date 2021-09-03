@@ -21,7 +21,6 @@ import org.springframework.core.annotation.Order;
  * NOTE: {@link AwsParamStorePropertySourceLocator} will still be loaded and uselessly retrieve properties from AWS
  * Parameter Store.
  */
-@Configuration
 @Order(-100)
 public class OrderedAwsParamStorePropertySourceLocator extends AwsParamStorePropertySourceLocator {
 

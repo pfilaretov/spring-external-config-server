@@ -1,1 +1,1 @@
-org.springframework.cloud.bootstrap.BootstrapConfiguration=pro.filaretov.spring.config.clientapp.OrderedAwsParamStorePropertySourceLocator
+org.springframework.cloud.bootstrap.BootstrapConfiguration=pro.filaretov.spring.config.clientapp.OrderedAwsParamStoreBootstrapConfiguration
