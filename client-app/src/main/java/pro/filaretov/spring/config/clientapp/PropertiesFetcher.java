@@ -10,11 +10,19 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class PropertiesFetcher implements ApplicationRunner {
 
-    @Value("${my.useful.param}")
-    private String myUsefulParam;
+    @Value("${my.aws.param}")
+    private String myAwsParam;
+
+    @Value("${my.config.server.param}")
+    private String myConfigServerParam;
+
+    @Value("${my.shared.param}")
+    private String mySharedParam;
 
     @Override
     public void run(ApplicationArguments args) {
-        log.info("myUsefulParam={}", myUsefulParam);
+        log.info("my.aws.param={}", myAwsParam);
+        log.info("my.config.server.param={}", myConfigServerParam);
+        log.info("my.shared.param={}", mySharedParam);
     }
 }
