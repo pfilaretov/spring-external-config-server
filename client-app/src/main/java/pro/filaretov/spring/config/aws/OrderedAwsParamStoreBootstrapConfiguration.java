@@ -1,4 +1,4 @@
-package pro.filaretov.spring.config.clientapp;
+package pro.filaretov.spring.config.aws;
 
 import com.amazonaws.services.simplesystemsmanagement.AWSSimpleSystemsManagement;
 import com.amazonaws.services.simplesystemsmanagement.AWSSimpleSystemsManagementClientBuilder;
