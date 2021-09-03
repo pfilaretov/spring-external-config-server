@@ -1,9 +1,12 @@
 package pro.filaretov.spring.config.clientapp;
 
 import com.amazonaws.services.simplesystemsmanagement.AWSSimpleSystemsManagement;
+import com.amazonaws.services.simplesystemsmanagement.AWSSimpleSystemsManagementClientBuilder;
+import com.amazonaws.util.StringUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.cloud.aws.autoconfigure.paramstore.AwsParamStoreBootstrapConfiguration;
+import org.springframework.cloud.aws.core.SpringCloudClientConfiguration;
 import org.springframework.cloud.aws.paramstore.AwsParamStoreProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,15 +15,21 @@ import org.springframework.context.annotation.Configuration;
 @EnableConfigurationProperties(AwsParamStoreProperties.class)
 @ConditionalOnClass({AWSSimpleSystemsManagement.class, OrderedAwsParamStorePropertySourceLocator.class})
 // add @ConditionalOnProperty, maybe?
-public class OrderedAwsParamStoreBootstrapConfiguration extends AwsParamStoreBootstrapConfiguration {
+public class OrderedAwsParamStoreBootstrapConfiguration {
 
-    /**
-     * This method's name should match the one in {@link AwsParamStoreBootstrapConfiguration} so that
-     * the former shadows the latter, and we do not have a bean of type {@code AwsParamStorePropertySourceLocator}.
-     */
     @Bean
-    OrderedAwsParamStorePropertySourceLocator awsParamStorePropertySourceLocator(
+    OrderedAwsParamStorePropertySourceLocator orderedAwsParamStorePropertySourceLocator(
         AWSSimpleSystemsManagement ssmClient, AwsParamStoreProperties properties) {
         return new OrderedAwsParamStorePropertySourceLocator(ssmClient, properties);
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    AWSSimpleSystemsManagement ssmClient(AwsParamStoreProperties awsParamStoreProperties) {
+        AWSSimpleSystemsManagementClientBuilder builder = AWSSimpleSystemsManagementClientBuilder
+            .standard().withClientConfiguration(SpringCloudClientConfiguration.getClientConfiguration());
+        return StringUtils.isNullOrEmpty(awsParamStoreProperties.getRegion())
+            ? builder.build()
+            : builder.withRegion(awsParamStoreProperties.getRegion()).build();
     }
 }
