@@ -10,14 +10,22 @@ bootstrap configuration.
 ### 1. Config Server
 
 1. Create git repository as a backend for config server at `${user.home}/spring-cloud-config-repo`
-   and add two properties files for `springConfigServerClientApp` application (`dev` and `prod` profiles):
+   and add three properties files for `springConfigServerClientApp` application (default, `dev` and `prod` profiles):
    ```
    cd ${HOME}
    mkdir spring-cloud-config-repo
    cd spring-cloud-config-repo
    git init .
-   echo my.useful.param=dev-value > springConfigServerClientApp-dev.properties
-   echo my.useful.param=PROD-value > springConfigServerClientApp-prod.properties
+
+   my.config.server.param=config-server-value > springConfigServerClientApp.properties
+   my.shared.param=config-server-shared-value > springConfigServerClientApp.properties
+      
+   echo my.config.server.param=config-server-DEV-value > springConfigServerClientApp-dev.properties
+   echo my.shared.param=config-server-shared-DEV-value > springConfigServerClientApp-dev.properties
+   
+   echo my.config.server.param=config-server-PROD-value > springConfigServerClientApp-prod.properties
+   echo my.shared.param=config-server-shared-PROD-value > springConfigServerClientApp-prod.properties
+   
    git add -A .
    git commit -m "Add application.properties"
    ```
@@ -37,7 +45,7 @@ bootstrap configuration.
     ```
     aws configure
     ```
-   This wil create `<user_home>/.aws/credentials` file with access key details
+   This will create `<user_home>/.aws/credentials` file with access key details
 6. Go to Systems Manager Parameter Store
 7. Create standard string parameters for `my.aws.param` and `my.shared.param` properties - 
    both default and profile-specific:
