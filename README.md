@@ -61,15 +61,14 @@ bootstrap configuration.
 
 ### 3. Client app
 
-1. Start `client-app` module's spring boot app - this is the client. It should read properties from both 
-   config server and AWS Parameter Store and print something like
-   ```
-   PropertiesFetcher      : my.aws.param=AWS-DEV-value
-   PropertiesFetcher      : my.config.server.param=config-server-DEV-value
-   PropertiesFetcher      : my.shared.param=AWS-shared-DEV-value
-   ```
-2. You may want to add `AWS_EC2_METADATA_DISABLED=true` env var to see less EC2 exception stack traces
-   during the application startup
+Start `client-app` module's spring boot app - this is the client. It should read properties from both 
+config server and AWS Parameter Store and print something like
+```
+PropertiesFetcher      : my.aws.param=AWS-DEV-value
+PropertiesFetcher      : my.config.server.param=config-server-DEV-value
+PropertiesFetcher      : my.shared.param=AWS-shared-DEV-value
+```
+
 
 ## Links
 
