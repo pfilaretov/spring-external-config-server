@@ -58,6 +58,8 @@ bootstrap configuration.
    /config/springConfigServerClientApp_dev/my.shared.param = AWS-shared-DEV-value
    /config/springConfigServerClientApp_prod/my.shared.param = AWS-shared-PROD-value
    ```
+8. Add labels (e.g. `v1`) for parameters you want to retrieve with the client app.
+For more info on labels and filtering based on them see [Use parameter labels for easy configuration update across environments](https://aws.amazon.com/blogs/mt/use-parameter-labels-for-easy-configuration-update-across-environments/).
 
 ### 3. Client app
 

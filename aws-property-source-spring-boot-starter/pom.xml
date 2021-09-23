@@ -19,6 +19,13 @@
       <groupId>org.springframework.cloud</groupId>
       <artifactId>spring-cloud-starter-aws-parameter-store-config</artifactId>
     </dependency>
+
+    <!-- Misc -->
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <optional>true</optional>
+    </dependency>
   </dependencies>
 
 </project>
