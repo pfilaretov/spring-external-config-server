@@ -60,6 +60,10 @@ bootstrap configuration.
    ```
 8. Add labels (e.g. `v1`) for parameters you want to retrieve with the client app.
 For more info on labels and filtering based on them see [Use parameter labels for easy configuration update across environments](https://aws.amazon.com/blogs/mt/use-parameter-labels-for-easy-configuration-update-across-environments/).
+Example on how to get params by labels via AWS CLI:
+   ```
+   aws ssm get-parameters-by-path --path /config --recursive --with-decryption --parameter-filters Key=Label,Values=v1,Option=Equals
+   ```
 
 ### 3. Client app
 
