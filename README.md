@@ -67,13 +67,15 @@ Example on how to get params by labels via AWS CLI:
 
 ### 3. Client app
 
-Start `client-app` module's spring boot app - this is the client. It should read properties from both 
-config server and AWS Parameter Store and print something like
-```
-PropertiesFetcher      : my.aws.param=AWS-DEV-value
-PropertiesFetcher      : my.config.server.param=config-server-DEV-value
-PropertiesFetcher      : my.shared.param=AWS-shared-DEV-value
-```
+1. Set `AWS_PROFILE` environment variable, if you are using non-default AWS profile
+2. Set active profile (`spring.profiles.active`)
+3. Start `client-app` module's spring boot app - this is the client. It should read properties from both 
+   config server and AWS Parameter Store and print something like
+   ```
+   PropertiesFetcher      : my.aws.param=AWS-DEV-value
+   PropertiesFetcher      : my.config.server.param=config-server-DEV-value
+   PropertiesFetcher      : my.shared.param=AWS-shared-DEV-value
+   ```
 
 
 ## Links

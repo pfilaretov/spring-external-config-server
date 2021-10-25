@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Set;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.aws.paramstore.AwsParamStorePropertySource;
+import org.springframework.util.StringUtils;
 
 /**
  * {@link AwsParamStorePropertySource} that can retrieve parameters filtered by labels.
@@ -17,9 +18,9 @@ import org.springframework.cloud.aws.paramstore.AwsParamStorePropertySource;
 @Slf4j
 public class LabelAwareAwsParamStorePropertySource extends AwsParamStorePropertySource {
 
-    private String context;
-    private String paramStoreLabel;
-    private Map<String, Object> properties = new LinkedHashMap<>();
+    private final String context;
+    private final String paramStoreLabel;
+    private final Map<String, Object> properties = new LinkedHashMap<>();
 
     public LabelAwareAwsParamStorePropertySource(String context, String paramStoreLabel, AWSSimpleSystemsManagement ssmClient) {
         super(context, ssmClient);
@@ -32,25 +33,28 @@ public class LabelAwareAwsParamStorePropertySource extends AwsParamStoreProperty
         GetParametersByPathRequest paramsRequest = new GetParametersByPathRequest()
             .withPath(context)
             .withRecursive(true)
-            .withWithDecryption(true)
-            .withParameterFilters(new ParameterStringFilter()
+            .withWithDecryption(true);
+
+        if (!StringUtils.isEmpty(paramStoreLabel)) {
+            paramsRequest.withParameterFilters(new ParameterStringFilter()
                 .withKey("Label")
                 .withOption("Equals")
                 .withValues(paramStoreLabel));
+        }
+
         getParameters(paramsRequest);
     }
 
     @Override
     public String[] getPropertyNames() {
         Set<String> strings = properties.keySet();
-        return strings.toArray(new String[strings.size()]);
+        return strings.toArray(new String[0]);
     }
 
     @Override
     public Object getProperty(String name) {
         return properties.get(name);
     }
-
 
     private void getParameters(GetParametersByPathRequest paramsRequest) {
         GetParametersByPathResult paramsResult = source.getParametersByPath(paramsRequest);
